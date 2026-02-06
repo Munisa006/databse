@@ -1,6 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import express from 'express';
 import doctorRouter from './routes/doctorRoutes.js';
 import patientRouter from './routes/patientRoutes.js';
