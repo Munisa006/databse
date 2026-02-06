@@ -6,11 +6,12 @@ A simple API for managing clinic operations.
 
 ```bash
 npm install
-psql -U postgres -d postgres -f dataset.sql
 npm start
 ```
 
 Server: `http://localhost:3000`
+
+**That's it!** Tables and sample data auto-create on startup.
 
 ## Requirements
 - Node.js
