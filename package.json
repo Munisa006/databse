@@ -4,14 +4,15 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-   "start": "node index.js",
-  "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "dotenv": "^17.2.4",
     "express": "^5.2.1",
     "pg": "^8.18.0"
   }
