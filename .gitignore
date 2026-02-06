@@ -1,11 +1,4 @@
-# Node.js dependencies
 node_modules/
-
-# Environment variables (maxfiy ma’lumotlar)
 .env
-
-# MacOS tizim fayllari
 .DS_Store
-
-# Log fayllar
 *.log
