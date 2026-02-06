@@ -17,10 +17,11 @@ export const getAllDoctors = async (req, res) => {
 export const getSingleDoctor = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await pool.query(`select * from doctors where doctor_id = ${id}`);
+    const result = await pool.query('SELECT * FROM doctors WHERE doctor_id = $1', [id]);
     res.status(200).json(result.rows[0]);
   } catch (error) {
-    console.log(error);
+    console.error("DB error:", error.message);
+    res.status(500).json({ error: "Internal server error" });
   }
 }
 
