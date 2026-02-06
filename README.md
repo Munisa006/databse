@@ -2,20 +2,39 @@
 
 A simple API for managing clinic operations.
 
-## Quick Start
-
-```bash
-npm install
-npm start
-```
-
-Server: `http://localhost:3000`
-
-**That's it!** Tables and sample data auto-create on startup.
-
 ## Requirements
 - Node.js
 - PostgreSQL
+
+## Setup Instructions
+
+### 1. Install Dependencies
+```bash
+npm install
+```
+
+### 2. Setup PostgreSQL Database
+
+**IMPORTANT:** This API requires a PostgreSQL database with the following tables:
+- `doctors`
+- `patients`
+- `appointments`
+- `treatments`
+- `payments`
+- `branches`
+
+You must create these tables in your PostgreSQL database before starting the server.
+
+**Make sure PostgreSQL is running on your machine (localhost:5432)**
+
+### 3. Start the Server
+```bash
+npm start
+```
+
+Server runs at: `http://localhost:3000`
+
+**Note:** The API will not work without a connected PostgreSQL database with the required tables!
 
 ## API Endpoints
 
