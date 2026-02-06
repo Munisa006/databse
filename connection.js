@@ -1,12 +1,19 @@
 import pkg from "pg";
+import dotenv from "dotenv";
+
+dotenv.config();
 const { Pool } = pkg;
 
 const pool = new Pool({
-  host: "localhost",   
-  port: 5432,         
-  user: "postgres",   
-  password: "1234",    
-  database: "postgres", 
+  host: process.env.DB_HOST || "localhost",   
+  port: process.env.DB_PORT || 5432,         
+  user: process.env.DB_USER || "postgres",   
+  password: process.env.DB_PASSWORD || "1234",    
+  database: process.env.DB_NAME || "postgres", 
+});
+
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle client', err);
 });
 
 export default pool;
