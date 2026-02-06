@@ -104,9 +104,5 @@ All endpoints use JSON format.
 
 ## Project Folders
 
-- **controllers/** - Contains business logic
+- **controllers/** - Contains business logic for each feature
 - **routes/** - Contains API endpoints
-- **config/** - Configuration files
-- **middleware/** - Helper functions for requests
-- **utils/** - Utility functions
-- **docs/** - Documentation
