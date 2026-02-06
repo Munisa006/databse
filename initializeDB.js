@@ -50,48 +50,48 @@ CREATE TABLE IF NOT EXISTS payments (
 `;
 
 export const initializeDatabase = async () => {
-  try {
-    await pool.query(createTablesSQL);
-    
-    // Insert sample data
-    await pool.query(`
+    try {
+        await pool.query(createTablesSQL);
+
+        // Insert sample data
+        await pool.query(`
       INSERT INTO doctors (full_name, specialization, phone_number, address)
       VALUES ('Dr. Ali Hasanov', 'Dentist', '+998911112233', 'Tashkent')
       ON CONFLICT DO NOTHING;
     `);
-    
-    await pool.query(`
+
+        await pool.query(`
       INSERT INTO patients (full_name, phone_number, address, dateofbirth)
       VALUES ('Aziza Rahimova', '+998901234567', 'Tashkent', '1999-08-15')
       ON CONFLICT DO NOTHING;
     `);
-    
-    await pool.query(`
+
+        await pool.query(`
       INSERT INTO branches (branch_name, location, phone_number, doctor_id)
       VALUES ('Central Clinic', 'Chilonzor', '+998712223344', 1)
       ON CONFLICT DO NOTHING;
     `);
-    
-    await pool.query(`
+
+        await pool.query(`
       INSERT INTO appointments (patient_id, doctor_id, branch_id, appointment_date)
       VALUES (1, 1, 1, '2026-02-10')
       ON CONFLICT DO NOTHING;
     `);
-    
-    await pool.query(`
+
+        await pool.query(`
       INSERT INTO treatments (appointment_id, treatment_description, treatment_date)
       VALUES (1, 'Teeth cleaning', '2026-02-10')
       ON CONFLICT DO NOTHING;
     `);
-    
-    await pool.query(`
+
+        await pool.query(`
       INSERT INTO payments (payment_type, amount, payment_date, appointment_id)
       VALUES ('Cash', 300000, '2026-02-10', 1)
       ON CONFLICT DO NOTHING;
     `);
-    
-    console.log('✅ Database initialized with tables and sample data');
-  } catch (error) {
-    console.error('Database error:', error.message);
-  }
+
+        console.log('✅ Database initialized with tables and sample data');
+    } catch (error) {
+        console.error('Database error:', error.message);
+    }
 };
