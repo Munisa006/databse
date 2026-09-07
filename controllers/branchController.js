@@ -2,30 +2,30 @@ import { Router } from 'express';
 import pool from "../connection.js";
 
 // GET all branches
-export const getAllBranches = async (req,res) => {
+export const getAllBranches = async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM branches');
     res.status(200).json(result.rows);
-  } catch(error) {
+  } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 
 // GET branches by ID
-export const getSingleBranch = async (req,res) => {
+export const getSingleBranch = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await pool.query('SELECT * FROM branches WHERE branch_id=$1', [id]);
     res.status(200).json(result.rows[0]);
-  } catch(error) {
+  } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 
 // CREATE a new branch
-export const createBranch = async (req,res) => {
+export const createBranch = async (req, res) => {
   try {
     const { branch_name, location, phone_number, doctor_id } = req.body;
     const result = await pool.query(
@@ -33,14 +33,14 @@ export const createBranch = async (req,res) => {
       [branch_name, location, phone_number, doctor_id]
     );
     res.status(201).json({ message: "Branch added successfully", obj: result.rows[0] });
-  } catch(error) {
+  } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 
 // UPDATE a branch
-export const updateBranch = async (req,res) => {
+export const updateBranch = async (req, res) => {
   try {
     const { id } = req.params;
     const { branch_name, location, phone_number, doctor_id } = req.body;
@@ -49,19 +49,19 @@ export const updateBranch = async (req,res) => {
       [branch_name, location, phone_number, doctor_id, id]
     );
     res.status(200).json({ message: "Branch updated successfully", obj: result.rows[0] });
-  } catch(error) {
+  } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 
 // DELETE a branch
-export const deleteBranch = async (req,res) => {
+export const deleteBranch = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await pool.query('DELETE FROM branches WHERE branch_id=$1 RETURNING *', [id]);
     res.status(200).json({ message: "Branch deleted successfully", deleted: result.rows[0] });
-  } catch(error) {
+  } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }

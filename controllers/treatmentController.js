@@ -1,30 +1,30 @@
 import pool from "../connection.js";
 
 // GET all treatments
-export const getAllTreatments = async (req,res) => {
+export const getAllTreatments = async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM treatments');
     res.status(200).json(result.rows);
-  } catch(error) {
+  } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 
 // GET single treatment
-export const getSingleTreatment = async (req,res) => {
+export const getSingleTreatment = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await pool.query('SELECT * FROM treatments WHERE treatment_id=$1', [id]);
     res.status(200).json(result.rows[0]);
-  } catch(error) {
+  } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 
 // CREATE treatment
-export const createTreatment = async (req,res) => {
+export const createTreatment = async (req, res) => {
   try {
     const { appointment_id, treatment_description, treatment_date } = req.body;
     const result = await pool.query(
@@ -32,14 +32,14 @@ export const createTreatment = async (req,res) => {
       [appointment_id, treatment_description, treatment_date]
     );
     res.status(201).json({ message: "Treatment created", obj: result.rows[0] });
-  } catch(error) {
+  } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 
 // UPDATE treatment
-export const updateTreatment = async (req,res) => {
+export const updateTreatment = async (req, res) => {
   try {
     const { id } = req.params;
     const { appointment_id, treatment_description, treatment_date } = req.body;
@@ -48,19 +48,19 @@ export const updateTreatment = async (req,res) => {
       [appointment_id, treatment_description, treatment_date, id]
     );
     res.status(200).json({ message: "Treatment updated successfully", obj: result.rows[0] });
-  } catch(error) {
+  } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 
 // DELETE treatment
-export const deleteTreatment = async (req,res) => {
+export const deleteTreatment = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await pool.query('DELETE FROM treatments WHERE treatment_id=$1 RETURNING *', [id]);
     res.status(200).json({ message: "Treatment deleted", deleted: result.rows[0] });
-  } catch(error) {
+  } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }

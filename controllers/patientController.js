@@ -7,7 +7,7 @@ export const getAllPatients = async (req, res) => {
     res.status(200).json(result.rows);
   } catch (error) {
     console.error("DB error:", error.message);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -22,7 +22,7 @@ export const getSinglePatient = async (req, res) => {
     res.status(200).json(result.rows[0]);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -44,7 +44,7 @@ export const createPatient = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -71,7 +71,7 @@ export const updatePatient = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
   }
 };
 

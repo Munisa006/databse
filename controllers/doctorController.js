@@ -7,8 +7,8 @@ export const getAllDoctors = async (req, res) => {
 
         res.status(200).json(result.rows);
     } catch (error) {
-        console.error("DB error:", error.message);
-        res.status(500).json({ error: "Internal server error" });
+        console.error("DB error:", error);
+        res.status(500).json({ error: error.message });
     }
 };
 
@@ -28,25 +28,37 @@ export const getSingleDoctor = async (req, res) => {
 //create a new doctor
 export const createDoctor = async (req, res) => {
     try {
-        const { full_name, specialization, phone_number, address } = req.body;
+        const { full_name, specialization, phone_number, address } = req.body ?? {};
+
+        if (!full_name || !specialization || !phone_number || !address) {
+            return res.status(400).json({
+                message: 'full_name, specialization, phone_number, and address are required'
+            });
+        }
+
         const result = await pool.query(
             `INSERT INTO doctors (full_name, specialization, phone_number, address) VALUES ($1, $2, $3, $4) RETURNING *`,
             [full_name, specialization, phone_number, address]
         );
-        res.status(201).json({ message: "Added successfully", obj: result.rows[0] });
+        const { doctor_id, ...doctor } = result.rows[0];
+        res.status(201).json({ message: "Added successfully", obj: doctor });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: error.message });
     }
 }
 //update a doctor
 export const updateDoctor = async (req, res) => {
     try {
         const { id } = req.params;
-        const { full_name, specialization, phone_number, address } = req.body;
+        const { full_name, specialization, phone_number, address } = req.body ?? {};
+
         if (!full_name || !specialization || !phone_number || !address) {
-            return res.status(400).json({ message: "All fields are required" });
+            return res.status(400).json({
+                message: "full_name, specialization, phone_number, and address are required"
+            });
         }
+
         const result = await pool.query(
             `UPDATE doctors SET full_name = $1, 
              specialization = $2, 
@@ -58,7 +70,7 @@ export const updateDoctor = async (req, res) => {
         res.status(200).json({ message: "Updated successfully", obj: result.rows[0] });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -75,7 +87,7 @@ export const deleteDoctor = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: error.message });
     }
 }
 
